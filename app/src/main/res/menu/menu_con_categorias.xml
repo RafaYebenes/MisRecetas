@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mEntrantes"
+        android:icon="@drawable/entrantes"
+        android:title="Entrantes"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/mPescado"
+        android:icon="@drawable/pescado"
+        android:title="Item"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/mCarne"
+        android:icon="@drawable/carne"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mVerduras"
+        android:icon="@drawable/verduras"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mEnsaladas"
+        android:icon="@drawable/ensalada"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mPostres"
+        android:icon="@drawable/postres"
+        android:title="Item"
+        app:showAsAction="always" />
+</menu>

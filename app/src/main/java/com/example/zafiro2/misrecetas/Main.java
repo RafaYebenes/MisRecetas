@@ -6,26 +6,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Login extends AppCompatActivity {
+import com.example.zafiro2.misrecetas.ManejoFicheros.ListadoRecetas;
 
-    public Button btnLogin;
+public class Main extends AppCompatActivity {
+
+    public Button btnRecetas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_main);
 
-        btnLogin = findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(mCorkyListener);
+        btnRecetas = findViewById(R.id.btnRecetas);
+        btnRecetas.setOnClickListener(mCorkyListener);
     }
 
     private View.OnClickListener mCorkyListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(v.getId()==findViewById(R.id.btnLogin).getId()){
-                Intent intent = new Intent(getApplicationContext(), Main.class);
+            if(v.getId()==findViewById(R.id.btnRecetas).getId()){
+                Intent intent = new Intent(getApplicationContext(), ListadoRecetas.class);
                 startActivity(intent);
             }
         }
+
     };
 }
