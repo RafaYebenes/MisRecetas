@@ -67,12 +67,14 @@ public class ListadoRecetas extends AppCompatActivity {
 
 
     public void selecionarPorCategoria(String Categoria){
-        //DatabaseAccess databaseAccess = DatabaseAccess.getInstace(this);
-       // databaseAccess.open();
-       // ArrayList<Receta> arrayRecetas = databaseAccess.getTodosByCategoria(Categoria);
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstace(this);
+        databaseAccess.open();
+        ArrayList<Receta> arrayRecetas = databaseAccess.getTodosByCategoria(Categoria);
         lvRecetas.setVisibility(View.VISIBLE);
         txvIntro.setVisibility(View.INVISIBLE);
 
+        Adaptador_lista_recetas adaptador_lista_recetas = new Adaptador_lista_recetas(this,arrayRecetas);
+        lvRecetas.setAdapter(adaptador_lista_recetas);
     }
 
     public void CargarObjetos(){

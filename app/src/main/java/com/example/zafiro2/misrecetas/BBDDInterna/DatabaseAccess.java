@@ -38,7 +38,7 @@ public class DatabaseAccess {
         Cursor c = null;
 
         ArrayList<Receta> arrayRecetas = new ArrayList<Receta>();
-        c = database.rawQuery("select * from recetas where categoria_receta ="+Categoria, null);
+        c = database.rawQuery("select * from recetas where categoria_receta = '"+Categoria+"'", null);
 
         if(c.moveToFirst()){
             do{
