@@ -75,8 +75,8 @@ public class Adaptador_lista_recetas extends BaseAdapter {
         txvNombreReceta.setText(dir.getNombre());
 
 
-        TextView txvCategoriaReceta = v.findViewById(R.id.txvCategoriaReceta);
-        txvCategoriaReceta.setText(dir.getCategoria());
+       // TextView txvCategoriaReceta = v.findViewById(R.id.txvCategoriaReceta);
+        //txvCategoriaReceta.setText(dir.getCategoria());
 
 
 

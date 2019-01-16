@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class ListadoRecetas extends AppCompatActivity {
     TextView txvIntro;
     ListView lvRecetas;
+    Toolbar tbCategoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class ListadoRecetas extends AppCompatActivity {
 
 
     public void selecionarPorCategoria(String Categoria){
+        tbCategoria.setTitle(Categoria);
         DatabaseAccess databaseAccess = DatabaseAccess.getInstace(this);
         databaseAccess.open();
         ArrayList<Receta> arrayRecetas = databaseAccess.getTodosByCategoria(Categoria);
@@ -80,5 +82,7 @@ public class ListadoRecetas extends AppCompatActivity {
     public void CargarObjetos(){
          txvIntro = findViewById(R.id.txvIntro);
          lvRecetas = findViewById(R.id.lvRecetas);
+         tbCategoria = findViewById(R.id.tbCategoria);
+         tbCategoria.setTitle("Categorias");
     }
 }
