@@ -1,12 +1,15 @@
 package com.example.zafiro2.misrecetas.ManejoFicheros;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -20,20 +23,35 @@ import java.util.ArrayList;
 
 public class ListadoRecetas extends AppCompatActivity {
     TextView txvIntro;
-    ListView lvRecetas;
+    RecyclerView lvRecetas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_recetas);
         CargarObjetos();
-        lvRecetas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvRecetas.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
+
+
+                View child = recyclerView.findChildViewUnder(motionEvent.getX(),motionEvent.getY());
+                int position = recyclerView.getChildAdapterPosition(child);
                 Receta receta = (Receta) lvRecetas.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(),VisorPDF.class);
                 intent.putExtra("enlace",receta.getArchivo());
-                startActivity(intent);
+                startActivity(intent
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean b) {
+
             }
         });
     }
@@ -90,3 +108,8 @@ public class ListadoRecetas extends AppCompatActivity {
          lvRecetas = findViewById(R.id.lvRecetas);
     }
 }
+
+/*
+metodos del onclick listview
+);
+ */
