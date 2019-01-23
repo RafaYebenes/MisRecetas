@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.zafiro2.misrecetas">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +20,8 @@
         </activity>
         <activity android:name=".Main" />
         <activity android:name=".ManejoFicheros.ListadoRecetas" />
-        <activity android:name=".ManejoFicheros.VisorPDF"></activity>
+        <activity android:name=".ManejoFicheros.VisorPDF" />
+        <activity android:name=".Registro"></activity>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+
 </manifest>
