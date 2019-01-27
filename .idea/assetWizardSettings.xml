@@ -40,11 +40,26 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="5" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="password_ico" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\Zafiro2\Desktop\Android - Stuff\Recursos APP Recetas\Iconos menu\pdf.png" />
+                                      <entry key="outputName" value="pdf" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="e5261f" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -63,6 +78,11 @@
                 </map>
               </option>
             </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState />
           </value>
         </entry>
       </map>

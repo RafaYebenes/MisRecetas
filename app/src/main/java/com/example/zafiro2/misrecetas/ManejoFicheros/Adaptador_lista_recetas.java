@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +19,10 @@ import com.example.zafiro2.misrecetas.R;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
-public class Adaptador_lista_recetas extends BaseAdapter {
+public class Adaptador_lista_recetas extends RecyclerView.Adapter<Adaptador_lista_recetas.ViewHolder> {
 
-    protected Activity activity;
     protected ArrayList<Receta> items;
 
-    public Adaptador_lista_recetas(Activity activity, ArrayList<Receta> items){
-        this.activity = activity;
-        this.items = items;
-    }
-
-    @Override
     public int getCount(){
         return items.size();
     }
@@ -42,9 +37,22 @@ public class Adaptador_lista_recetas extends BaseAdapter {
         }
     }
 
-    @Override
+
     public Object getItem(int arg0) {
         return items.get(arg0);
+    }
+
+    @NonNull
+    @Override
+    public Adaptador_lista_recetas.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adaptador_lista_recetas, viewGroup, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull Adaptador_lista_recetas.ViewHolder viewHolder, int i) {
+        viewHolder.txvNombre.setText(items.get(i).getNombre());
+        viewHolder.txvDescripcion.setText(items.get(i).getDescripcion());
     }
 
     @Override
@@ -53,37 +61,19 @@ public class Adaptador_lista_recetas extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public int getItemCount() {
+        return 0;
+    }
 
-        View v = convertView;
 
-        if (convertView == null) {
-            LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            v = inf.inflate(R.layout.adaptador_lista_recetas, null);
-
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        private TextView txvNombre;
+        private TextView txvDescripcion;
+        public ViewHolder(View view) {
+            super(view);
+            txvNombre = view.findViewById(R.id.txvNombreReceta);
+            txvDescripcion = view.findViewById(R.id.txvDescripcionReceta);
 
         }
-
-        Receta dir = items.get(position);
-
-        //enlazar cada elemento de tu layout a cada atributo de la clase
-        TextView txvNombreReceta = v.findViewById(R.id.txvNombreReceta);
-
-
-
-        txvNombreReceta.setText(dir.getNombre());
-
-
-        TextView txvCategoriaReceta = v.findViewById(R.id.txvCategoriaReceta);
-        txvCategoriaReceta.setText(dir.getCategoria());
-
-
-
-        TextView txvDescripcionReceta = v.findViewById(R.id.txvDescripcionReceta);
-        txvDescripcionReceta.setText(dir.getDescripcion());
-
-
-        return v;
     }
 }
