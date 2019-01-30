@@ -38,24 +38,7 @@ public class Registro extends AppCompatActivity {
         btnGuardar = findViewById(R.id.btnGuardarRegistro);
 
         btnGuardar.setOnClickListener(mCorkyListener);
-         respuesta = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-            try{
-                JSONObject jsonRespuesta = new JSONObject(response);
-                boolean ok = jsonRespuesta.getBoolean("success");
-                if(ok==true){
-                    Toast.makeText(Registro.this, "Conseguido", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(Registro.this, "Fallo al resitrar", Toast.LENGTH_SHORT).show();
-                }
 
-            }catch (JSONException e){
-                e.getMessage();
-            }
-            }
-        };
 
     }
 
@@ -63,8 +46,28 @@ public class Registro extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if(v.getId()==findViewById(R.id.btnGuardarRegistro).getId()){
-                //ejecutarServicio("https://subsidized-cargoes.000webhostapp.com/registro.php");
-                RegistroRequest r = new RegistroRequest(edtUserName.getText().toString(),edtPassword.getText().toString(),respuesta);
+               // ejecutarServicio("https://subsidized-cargoes.000webhostapp.com/registro.php");
+               String usuario = edtUserName.getText().toString();
+                String password = edtPassword.getText().toString();
+                respuesta = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try{
+                            JSONObject jsonRespuesta = new JSONObject(response);
+                            boolean ok = jsonRespuesta.getBoolean("success");
+                            if(ok==true){
+                                Toast.makeText(Registro.this, "Conseguido", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                Toast.makeText(Registro.this, "Fallo al resitrar", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }catch (JSONException e){
+                            e.getMessage();
+                        }
+                    }
+                };
+                RegistroRequest r = new RegistroRequest(usuario,password,respuesta);
                 RequestQueue cola = Volley.newRequestQueue(Registro.this);
                 cola.add(r);
             }
@@ -76,7 +79,19 @@ public class Registro extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(Registro.this, "Exito en la operación", Toast.LENGTH_SHORT).show();
+                try{
+                    JSONObject jsonRespuesta = new JSONObject(response);
+                    boolean ok = jsonRespuesta.getBoolean("success");
+                    if(ok==true){
+                        Toast.makeText(Registro.this, "Conseguido", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(Registro.this, "Fallo al resitrar", Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (JSONException e){
+                    e.getMessage();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
