@@ -16,6 +16,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +27,7 @@ public class Registro extends AppCompatActivity {
     EditText edtUserName;
     EditText edtPassword;
     Button btnGuardar;
+    Response.Listener<String> respuesta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,24 @@ public class Registro extends AppCompatActivity {
         btnGuardar = findViewById(R.id.btnGuardarRegistro);
 
         btnGuardar.setOnClickListener(mCorkyListener);
+         respuesta = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+            try{
+                JSONObject jsonRespuesta = new JSONObject(response);
+                boolean ok = jsonRespuesta.getBoolean("success");
+                if(ok==true){
+                    Toast.makeText(Registro.this, "Conseguido", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(Registro.this, "Fallo al resitrar", Toast.LENGTH_SHORT).show();
+                }
+
+            }catch (JSONException e){
+                e.getMessage();
+            }
+            }
+        };
 
     }
 
@@ -41,7 +63,10 @@ public class Registro extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if(v.getId()==findViewById(R.id.btnGuardarRegistro).getId()){
-                ejecutarServicio("192.168.1.110:80/recetas/registro.php");
+                //ejecutarServicio("https://subsidized-cargoes.000webhostapp.com/registro.php");
+                RegistroRequest r = new RegistroRequest(edtUserName.getText().toString(),edtPassword.getText().toString(),respuesta);
+                RequestQueue cola = Volley.newRequestQueue(Registro.this);
+                cola.add(r);
             }
 
         }
@@ -59,8 +84,8 @@ public class Registro extends AppCompatActivity {
                 Toast.makeText(Registro.this, "Fallo en la operación", Toast.LENGTH_SHORT).show();
             }
         }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError{
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError{
                 Map<String, String> parametros = new HashMap<String, String>();
                 parametros.put("usuario",edtUserName.getText().toString());
                 parametros.put("password",edtPassword.getText().toString());
@@ -71,4 +96,6 @@ public class Registro extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
+
 }

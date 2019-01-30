@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,35 +22,21 @@ import java.util.ArrayList;
 
 public class ListadoRecetas extends AppCompatActivity {
     TextView txvIntro;
-    RecyclerView lvRecetas;
+    ListView lvRecetas;
+    Toolbar tbCategoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_recetas);
         CargarObjetos();
-        lvRecetas.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        lvRecetas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
-
-
-                View child = recyclerView.findChildViewUnder(motionEvent.getX(),motionEvent.getY());
-                int position = recyclerView.getChildAdapterPosition(child);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Receta receta = (Receta) lvRecetas.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(),VisorPDF.class);
                 intent.putExtra("enlace",receta.getArchivo());
-                startActivity(intent
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean b) {
-
+                startActivity(intent);
             }
         });
     }
@@ -93,6 +78,7 @@ public class ListadoRecetas extends AppCompatActivity {
 
 
     public void selecionarPorCategoria(String Categoria){
+        tbCategoria.setTitle(Categoria);
         DatabaseAccess databaseAccess = DatabaseAccess.getInstace(this);
         databaseAccess.open();
         ArrayList<Receta> arrayRecetas = databaseAccess.getTodosByCategoria(Categoria);
@@ -106,6 +92,8 @@ public class ListadoRecetas extends AppCompatActivity {
     public void CargarObjetos(){
          txvIntro = findViewById(R.id.txvIntro);
          lvRecetas = findViewById(R.id.lvRecetas);
+         tbCategoria = findViewById(R.id.tbCategoria);
+         tbCategoria.setTitle("Categorias");
     }
 }
 
