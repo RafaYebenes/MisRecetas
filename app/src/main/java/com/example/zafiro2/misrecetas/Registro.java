@@ -26,8 +26,9 @@ public class Registro extends AppCompatActivity {
 
     EditText edtUserName;
     EditText edtPassword;
+    EditText edtNombre;
     Button btnGuardar;
-    Response.Listener<String> respuesta;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,7 @@ public class Registro extends AppCompatActivity {
         edtUserName = findViewById(R.id.edtNombreUsuario);
         edtPassword = findViewById(R.id.edtPassword);
         btnGuardar = findViewById(R.id.btnGuardarRegistro);
-
+        edtNombre = findViewById(R.id.edtNombreReg);
         btnGuardar.setOnClickListener(mCorkyListener);
 
 
@@ -49,7 +50,8 @@ public class Registro extends AppCompatActivity {
                // ejecutarServicio("https://subsidized-cargoes.000webhostapp.com/registro.php");
                String usuario = edtUserName.getText().toString();
                 String password = edtPassword.getText().toString();
-                respuesta = new Response.Listener<String>() {
+                String nombre = edtNombre.getText().toString();
+                Response.Listener<String> respuesta = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try{

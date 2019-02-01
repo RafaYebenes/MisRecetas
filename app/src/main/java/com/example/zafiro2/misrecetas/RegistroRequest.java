@@ -13,11 +13,13 @@ public class RegistroRequest extends StringRequest {
     private static final String ruta = "https://subsidized-cargoes.000webhostapp.com/registro.php";
     private Map<String, String> parametros;
 
-    public RegistroRequest(String usuario, String password, Response.Listener<String> listener) {
-        super(Request.Method.POST,ruta, listener, null);
+    public RegistroRequest(String usuario, String password,  Response.Listener<String> listener) {
+        super(Method.POST,ruta, listener, null);
         parametros = new HashMap<>();
+        //parametros.put("nombre",nombre+"");
         parametros.put("usuario",usuario+" ");
         parametros.put("password",password+" ");
+
     }
 
 

@@ -1,11 +1,14 @@
 package com.example.zafiro2.misrecetas.Objetos;
 
+import java.util.List;
+
 public class Receta {
     int id;
     String Nombre;
     String Categoria;
     String Descripcion;
     String Archivo;
+
 
     public Receta(int id, String nombre, String categoria, String descripcion, String archivo) {
         this.id = id;

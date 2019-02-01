@@ -49,4 +49,20 @@ public class DatabaseAccess {
         c.close();
         return arrayRecetas;
     }
+
+    public ArrayList<Receta> getTodasLasRecetas(){
+        Cursor c = null;
+
+        ArrayList<Receta> arrayRecetas = new ArrayList<Receta>();
+        c = database.rawQuery("select * from recetas", null);
+
+        if(c.moveToFirst()){
+            do{
+                arrayRecetas.add(new Receta(c.getInt(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4)));
+            }while (c.moveToNext());
+        }
+
+        c.close();
+        return arrayRecetas;
+    }
 }
