@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.zafiro2.misrecetas.ManejoFicheros.ListadoRecetas;
+import com.example.zafiro2.misrecetas.RecycledView.ListaRecycled;
 
 public class Main extends AppCompatActivity {
 
@@ -25,7 +26,7 @@ public class Main extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if(v.getId()==findViewById(R.id.btnRecetas).getId()){
-                Intent intent = new Intent(getApplicationContext(), ListadoRecetas.class);
+                Intent intent = new Intent(getApplicationContext(), ListaRecycled.class);
                 startActivity(intent);
             }
         }

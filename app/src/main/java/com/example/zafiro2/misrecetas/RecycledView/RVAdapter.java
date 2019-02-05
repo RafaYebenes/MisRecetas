@@ -13,9 +13,16 @@ import com.example.zafiro2.misrecetas.R;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RecetasViewHolder> {
+public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RecetasViewHolder> implements  View.OnClickListener{
 
     List<Receta> recetas;
+    private View.OnClickListener listener;
+
+    @Override
+    public void onClick(View v) {
+        if(listener!=null)
+            listener.onClick(v);
+    }
 
     public static class RecetasViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
@@ -45,8 +52,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RecetasViewHolder>
     public RecetasViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adaptador_cardview_lista_recetas,viewGroup,false);
         RecetasViewHolder recetasViewHolder = new RecetasViewHolder(v);
+        v.setOnClickListener(this);
         return recetasViewHolder;
+    }
 
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener = listener;
     }
 
     @Override

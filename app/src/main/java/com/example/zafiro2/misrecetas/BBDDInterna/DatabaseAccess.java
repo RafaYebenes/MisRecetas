@@ -54,7 +54,7 @@ public class DatabaseAccess {
         Cursor c = null;
 
         ArrayList<Receta> arrayRecetas = new ArrayList<Receta>();
-        c = database.rawQuery("select * from recetas", null);
+        c = database.rawQuery("select * from recetas",null);
 
         if(c.moveToFirst()){
             do{
