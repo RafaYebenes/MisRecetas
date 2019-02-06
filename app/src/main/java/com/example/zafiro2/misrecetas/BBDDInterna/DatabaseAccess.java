@@ -65,4 +65,21 @@ public class DatabaseAccess {
         c.close();
         return arrayRecetas;
     }
+
+    public int CantidadRecetas(){
+
+        Cursor c = null;
+
+        c = database.rawQuery("select * from recetas",null);
+
+        int num = c.getColumnCount();
+
+        return num;
+    }
+
+    /*public String recetaFavorita(){
+        Cursor c = null;
+
+        //c = database.rawQuery("select nombre_receta where")
+    }*/
 }

@@ -41,7 +41,16 @@ public class ListaRecycled extends AppCompatActivity {
          rv.setHasFixedSize(true);
 
 
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstace(this);
+        databaseAccess.open();
+        arrayRecetas= databaseAccess.getTodasLasRecetas();
 
+        LinearLayoutManager llm = new LinearLayoutManager(this.getApplicationContext());
+        rv.setLayoutManager(llm);
+
+
+        rvAdapter = new RVAdapter(arrayRecetas);
+        rv.setAdapter(rvAdapter);
 
 
 

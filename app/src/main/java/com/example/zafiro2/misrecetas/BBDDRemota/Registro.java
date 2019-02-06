@@ -37,7 +37,7 @@ public class Registro extends AppCompatActivity {
     String nombre;
     String Apellidos;
     String email;
-    String fecha_nacimiento;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,28 +64,32 @@ public class Registro extends AppCompatActivity {
         public void onClick(View v) {
             if(v.getId()==findViewById(R.id.btnGuardarRegistro).getId()){
                // ejecutarServicio("https://subsidized-cargoes.000webhostapp.com/registro.php");
-               getValores();
-                Response.Listener<String> respuesta = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            JSONObject jsonRespuesta = new JSONObject(response);
-                            boolean ok = jsonRespuesta.getBoolean("success");
-                            if(ok==true){
-                                Toast.makeText(Registro.this, "Conseguido", Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-                                Toast.makeText(Registro.this, "Fallo al resitrar", Toast.LENGTH_SHORT).show();
-                            }
+                getValores();
+                if(comprobarCamposVacios()&&comprobarLonguitudCampos()) {
 
-                        }catch (JSONException e){
-                            e.getMessage();
+
+                    Response.Listener<String> respuesta = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonRespuesta = new JSONObject(response);
+                                boolean ok = jsonRespuesta.getBoolean("success");
+                                if (ok == true) {
+                                    Toast.makeText(Registro.this, "Conseguido", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Registro.this, "Fallo al resitrar", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.getMessage();
+                            }
                         }
-                    }
-                };
-                RegistroRequest r = new RegistroRequest(usuario,password,email,nombre,Apellidos,respuesta);
-                RequestQueue cola = Volley.newRequestQueue(Registro.this);
-                cola.add(r);
+                    };
+                    RegistroRequest r = new RegistroRequest(usuario, password, email, nombre, Apellidos, respuesta);
+                    RequestQueue cola = Volley.newRequestQueue(Registro.this);
+                    cola.add(r);
+                    finish();
+                }
             }
 
         }
@@ -97,7 +101,7 @@ public class Registro extends AppCompatActivity {
          password = edtPassword.getText().toString();
          nombre = edtNombre.getText().toString();
          Apellidos = edtApellidos.getText().toString();
-
+         email = edtEmail.getText().toString();
 
     }
 
@@ -108,7 +112,7 @@ public class Registro extends AppCompatActivity {
         }else{
             Toast.makeText(this, "Nombre usuario: Caracteres Minimos 3, Maximos 20", Toast.LENGTH_SHORT).show();
         }
-        if(password.length()>3&&password.length()>20){
+        if(password.length()>3&&password.length()<20){
             cont++;
         }else{
             Toast.makeText(this, "Contraseña: Caracteres Minimos 3, Maximos 20", Toast.LENGTH_SHORT).show();
@@ -127,23 +131,33 @@ public class Registro extends AppCompatActivity {
     }
 
     public boolean comprobarCamposVacios(){
-
+    int cont = 0;
         if(usuario.length()==0){
             Toast.makeText(this, "Debes completar todos los campos", Toast.LENGTH_SHORT).show();
+            cont++;
         }
         if(password.length()==0){
             Toast.makeText(this, "Debes completar todos los campos", Toast.LENGTH_SHORT).show();
+            cont++;
         }
         if(nombre.length()==0){
             Toast.makeText(this, "Debes completar todos los campos", Toast.LENGTH_SHORT).show();
+            cont++;
         }
         if(Apellidos.length()==0){
             Toast.makeText(this, "Debes completar todos los campos", Toast.LENGTH_SHORT).show();
+            cont++;
         }
         if(email.length()==0) {
             Toast.makeText(this, "Debes completar todos los campos", Toast.LENGTH_SHORT).show();
+            cont++;
         }
-       // if()
+       if(cont!=0){
+            return false;
+       }
+       else{
+            return true;
+       }
     }
 
 

@@ -43,7 +43,7 @@
         app:layout_constraintVertical_bias="0.633" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/edtLoginUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -53,10 +53,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:drawableLeft="@drawable/usuario_ico"
+        android:drawablePadding="5dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="Usuario"
-        app:layout_constraintBottom_toTopOf="@+id/editText2"
+        app:layout_constraintBottom_toTopOf="@+id/edtLoginPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +65,7 @@
         app:layout_constraintVertical_bias="0.871" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/edtLoginPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -75,9 +76,11 @@
         android:drawableLeft="@drawable/password_ico"
         android:ems="10"
         android:inputType="textPassword"
+        android:text="asdf"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:drawablePadding="5dp"/>
 
 </android.support.constraint.ConstraintLayout>
