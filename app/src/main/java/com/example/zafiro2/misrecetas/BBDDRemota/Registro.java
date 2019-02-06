@@ -27,30 +27,44 @@ public class Registro extends AppCompatActivity {
     EditText edtUserName;
     EditText edtPassword;
     EditText edtNombre;
+    EditText edtApellidos;
+    EditText edtEmail;
+    EditText edtFecha;
     Button btnGuardar;
+
+    String usuario;
+    String password;
+    String nombre;
+    String Apellidos;
+    String email;
+    String fecha_nacimiento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+        cargarObjetos();
 
-        edtUserName = findViewById(R.id.edtNombreUsuario);
-        edtPassword = findViewById(R.id.edtPassword);
-        btnGuardar = findViewById(R.id.btnGuardarRegistro);
-        edtNombre = findViewById(R.id.edtNombreReg);
-        btnGuardar.setOnClickListener(mCorkyListener);
 
 
     }
 
+    public void cargarObjetos(){
+        edtUserName = findViewById(R.id.edtNombreUsuario);
+        edtPassword = findViewById(R.id.edtPassword);
+        edtNombre = findViewById(R.id.edtNombreReg);
+        edtApellidos = findViewById(R.id.edtApellido);
+        edtEmail = findViewById(R.id.edtEmail);
+        btnGuardar = findViewById(R.id.btnGuardarRegistro);
+        btnGuardar.setOnClickListener(mCorkyListener);
+
+    }
     private View.OnClickListener mCorkyListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if(v.getId()==findViewById(R.id.btnGuardarRegistro).getId()){
                // ejecutarServicio("https://subsidized-cargoes.000webhostapp.com/registro.php");
-               String usuario = edtUserName.getText().toString();
-                String password = edtPassword.getText().toString();
-                String nombre = edtNombre.getText().toString();
+               getValores();
                 Response.Listener<String> respuesta = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -69,7 +83,7 @@ public class Registro extends AppCompatActivity {
                         }
                     }
                 };
-                RegistroRequest r = new RegistroRequest(usuario,password,respuesta);
+                RegistroRequest r = new RegistroRequest(usuario,password,email,nombre,Apellidos,respuesta);
                 RequestQueue cola = Volley.newRequestQueue(Registro.this);
                 cola.add(r);
             }
@@ -77,41 +91,59 @@ public class Registro extends AppCompatActivity {
         }
     };
 
-    public void ejecutarServicio(String URL){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try{
-                    JSONObject jsonRespuesta = new JSONObject(response);
-                    boolean ok = jsonRespuesta.getBoolean("success");
-                    if(ok==true){
-                        Toast.makeText(Registro.this, "Conseguido", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Toast.makeText(Registro.this, "Fallo al resitrar", Toast.LENGTH_SHORT).show();
-                    }
 
-                }catch (JSONException e){
-                    e.getMessage();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Registro.this, "Fallo en la operación", Toast.LENGTH_SHORT).show();
-            }
-        }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError{
-                Map<String, String> parametros = new HashMap<String, String>();
-                parametros.put("usuario",edtUserName.getText().toString());
-                parametros.put("password",edtPassword.getText().toString());
+    public void getValores(){
+         usuario = edtUserName.getText().toString();
+         password = edtPassword.getText().toString();
+         nombre = edtNombre.getText().toString();
+         Apellidos = edtApellidos.getText().toString();
 
-                return parametros;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+
+    }
+
+    public boolean comprobarLonguitudCampos(){
+        int cont = 0;
+        if(usuario.length()>3&&usuario.length()<20){
+            cont++;
+        }else{
+            Toast.makeText(this, "Nombre usuario: Caracteres Minimos 3, Maximos 20", Toast.LENGTH_SHORT).show();
+        }
+        if(password.length()>3&&password.length()>20){
+            cont++;
+        }else{
+            Toast.makeText(this, "Contraseña: Caracteres Minimos 3, Maximos 20", Toast.LENGTH_SHORT).show();
+        }
+        if(nombre.length()>3&&nombre.length()<20){
+            cont++;
+        }else{
+            Toast.makeText(this, "Nombre usuario: Caracteres Minimos 3, Maximos 20", Toast.LENGTH_SHORT).show();
+        }
+        if(cont==3){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean comprobarCamposVacios(){
+
+        if(usuario.length()==0){
+            Toast.makeText(this, "Debes completar todos los campos", Toast.LENGTH_SHORT).show();
+        }
+        if(password.length()==0){
+            Toast.makeText(this, "Debes completar todos los campos", Toast.LENGTH_SHORT).show();
+        }
+        if(nombre.length()==0){
+            Toast.makeText(this, "Debes completar todos los campos", Toast.LENGTH_SHORT).show();
+        }
+        if(Apellidos.length()==0){
+            Toast.makeText(this, "Debes completar todos los campos", Toast.LENGTH_SHORT).show();
+        }
+        if(email.length()==0) {
+            Toast.makeText(this, "Debes completar todos los campos", Toast.LENGTH_SHORT).show();
+        }
+       // if()
     }
 
 

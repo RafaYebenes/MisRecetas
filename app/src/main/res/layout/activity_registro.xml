@@ -86,8 +86,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView2"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="290dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="235dp"
         android:layout_marginEnd="66dp"
         android:layout_marginRight="66dp"
         android:text="Nombre"
@@ -111,8 +111,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView2"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginBottom="158dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="188dp"
         android:text="Apellido"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -122,64 +122,24 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/edtNombreUsuario"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginBottom="138dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginBottom="172dp"
         android:ems="10"
         android:inputType="textPersonName" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="-1dp"
-        android:layout_marginBottom="270dp"
-        android:text="Telefono"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-    <EditText
-        android:id="@+id/edtTelefono"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/edtNombreReg"
-        android:layout_below="@+id/edtEmail"
-        android:layout_alignStart="@+id/edtNombreUsuario"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="17dp"
-        android:ems="10"
-        android:inputType="number" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView3"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="-1dp"
-        android:layout_marginBottom="90dp"
-        android:text="Fecha Nacimiento"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-    <EditText
-        android:id="@+id/edtFechaNacimiento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/edtNombreUsuario"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginBottom="76dp"
-        android:ems="10"
-        android:inputType="date" />
 
     <Button
         android:id="@+id/btnGuardarRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="-3dp"
-        android:layout_marginBottom="20dp"
-        android:layout_toEndOf="@+id/textView8"
+        android:layout_marginStart="133dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginRight="163dp"
+        android:layout_marginBottom="61dp"
         android:text="Guardar" />
 </RelativeLayout>
