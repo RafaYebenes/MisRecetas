@@ -77,9 +77,5 @@ public class DatabaseAccess {
         return num;
     }
 
-    /*public String recetaFavorita(){
-        Cursor c = null;
 
-        //c = database.rawQuery("select nombre_receta where")
-    }*/
 }
