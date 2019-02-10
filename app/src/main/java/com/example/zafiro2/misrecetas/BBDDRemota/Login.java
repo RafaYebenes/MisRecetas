@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.zafiro2.misrecetas.Main;
 import com.example.zafiro2.misrecetas.R;
+import com.example.zafiro2.misrecetas.Objetos.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,10 +62,17 @@ public class Login extends AppCompatActivity {
                                 JSONObject jsonRespuesta = new JSONObject(response);
                                 boolean ok = jsonRespuesta.getBoolean("success");
                                 if (ok == true) {
-                                    String usuario = jsonRespuesta.getString("usuario");
-                                    Toast.makeText(Login.this, "Conectado con el usuario: " + usuario, Toast.LENGTH_SHORT).show();
+                                    usuario newUser = new usuario();
+                                    newUser.setNombreUsuario(jsonRespuesta.getString("usuario"));
+                                    newUser.setNombre(jsonRespuesta.getString("nombre"));
+                                    newUser.setApellido(jsonRespuesta.getString("apellidos"));
+                                    newUser.setEmail(jsonRespuesta.getString("email"));
+
+                                    Toast.makeText(Login.this, "Conectado con el usuario: " + newUser.getNombreUsuario()+newUser.getApellido(), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), Main.class);
-                                    intent.putExtra("usuario", usuario);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("usuario", newUser);
+                                    intent.putExtra("bundleUser",bundle);
                                     startActivity(intent);
                                     finish();
                                 } else {

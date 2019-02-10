@@ -16,10 +16,12 @@ public class obtenerPerfilRequest extends StringRequest {
 
 
 
-    public obtenerPerfilRequest(String usuario, Response.Listener<String> listener) {
+    public obtenerPerfilRequest(String usuario, int telefono, String fechaNacimiento, Response.Listener<String> listener) {
         super(Request.Method.POST,ruta, listener, null);
         parametros = new HashMap<>();
         parametros.put("usuario",usuario+" ");
+        parametros.put("telefono", telefono+" ");
+        parametros.put("fechaNacimiento", fechaNacimiento+" ");
 
 
 

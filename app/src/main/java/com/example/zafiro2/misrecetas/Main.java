@@ -13,11 +13,12 @@ import android.widget.Toast;
 import com.example.zafiro2.misrecetas.BBDDRemota.Login;
 import com.example.zafiro2.misrecetas.ManejoFicheros.ListadoRecetas;
 import com.example.zafiro2.misrecetas.RecycledView.ListaRecycled;
+import com.example.zafiro2.misrecetas.Objetos.*;
 
 public class Main extends AppCompatActivity {
 
     String usuario;
-
+    usuario user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,8 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
 
-        usuario = intent.getStringExtra("usuario");
+        Bundle bundle = intent.getBundleExtra("bundleUser");
+        user = (usuario) bundle.getSerializable("usuario");
 
 
 
@@ -51,7 +53,9 @@ public class Main extends AppCompatActivity {
                 break;
             case R.id.mpPerfil:
                 Intent intent2 = new Intent(getApplicationContext(), Perfil.class);
-                intent2.putExtra("usuario",usuario);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("usuario",user);
+                intent2.putExtra("usuarioBundle",bundle);
                 startActivity(intent2);
                 break;
             case  R.id.mpCerrarSesion:
