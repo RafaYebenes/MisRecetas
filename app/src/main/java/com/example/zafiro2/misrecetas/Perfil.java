@@ -3,7 +3,9 @@ package com.example.zafiro2.misrecetas;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,17 +19,25 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.zafiro2.misrecetas.BBDDInterna.DatabaseAccess;
 import com.example.zafiro2.misrecetas.BBDDRemota.Login;
 import com.example.zafiro2.misrecetas.BBDDRemota.LoginRequest;
 import com.example.zafiro2.misrecetas.BBDDRemota.obtenerPerfilRequest;
+import com.example.zafiro2.misrecetas.Dialogos.DialogoFecha;
 import com.example.zafiro2.misrecetas.Objetos.usuario;
 import com.example.zafiro2.misrecetas.Objetos.usuario;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Method;
+import java.util.Map;
 
 public class Perfil extends AppCompatActivity {
 
@@ -37,7 +47,7 @@ public class Perfil extends AppCompatActivity {
     String email;
     String CatFavorita;
     usuario user;
-
+    boolean editable = false;
 
     TextView txvNombrePerfil;
     TextView txvApellidosPerfil;
@@ -48,6 +58,8 @@ public class Perfil extends AppCompatActivity {
     ImageButton imbPerfil;
     Button btnGuardaPerfil;
 
+    StringRequest stringRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +68,6 @@ public class Perfil extends AppCompatActivity {
         Bundle bundle = intent.getBundleExtra("usuarioBundle");
         user = (usuario) bundle.getSerializable("usuario");
         cargarObjetos();
-
-
-
-
-
-
     }
 
 
@@ -98,10 +104,49 @@ public class Perfil extends AppCompatActivity {
             }
         });
 
+        edtFechaNacimiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogoFecha dialogoFecha = new DialogoFecha();
+                dialogoFecha.show(getSupportFragmentManager(),"Fecha");
+            }
+        });
 
         /* databaseAccess = DatabaseAccess.getInstace(this);
         int cantidadRecetas = databaseAccess.CantidadRecetas();
         txvCantidadRecetas.setText(Integer.toString(cantidadRecetas));*/
+
+        imbPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cargarFoto();
+            }
+        });
+
+        imbPerfil.setEnabled(false);
+
+        int cont = 0;
+
+        if(user.getFecha_nacimiento().equals("null")){
+             edtFechaNacimiento.setText(" ");
+             cont++;
+        }
+        else{
+            edtFechaNacimiento.setText(user.getFecha_nacimiento());
+        }
+
+        if( user.getTelefono().equals("null")){
+             edtTelefono.setText(" ");
+             cont++;
+        }
+        else{
+            edtTelefono.setText( user.getTelefono());
+        }
+
+        if(cont==2){
+            Toast.makeText(this, "Tu perfil esta incompleto, relleña los campos que te faltan", Toast.LENGTH_SHORT).show();
+            cont =0;
+        }
     }
 
 
@@ -130,15 +175,25 @@ public class Perfil extends AppCompatActivity {
 
     public void cambiarEditablesTodosTextView(){
 
-        btnGuardaPerfil.setVisibility(View.VISIBLE);
-        edtFechaNacimiento.setEnabled(true);
-        edtTelefono.setEnabled(true);
+        if(editable==false) {
+            btnGuardaPerfil.setVisibility(View.VISIBLE);
+            edtFechaNacimiento.setEnabled(true);
+            edtTelefono.setEnabled(true);
+            imbPerfil.setEnabled(true);
+            editable = true;
+        }else{
+            btnGuardaPerfil.setVisibility(View.INVISIBLE);
+            edtFechaNacimiento.setEnabled(false);
+            edtTelefono.setEnabled(false);
+            imbPerfil.setEnabled(false);
+            editable = false;
+        }
     }
 
     public void actualizarPerfil(){
 
 
-        user.setTelefono(Integer.parseInt(edtTelefono.getText().toString()));
+        user.setTelefono(edtTelefono.getText().toString());
         user.setFecha_nacimiento(edtFechaNacimiento.getText().toString());
 
         Response.Listener<String> respuesta = new Response.Listener<String>() {
@@ -163,4 +218,57 @@ public class Perfil extends AppCompatActivity {
         cola.add(l);
     }
 
+
+    /*private void subirFoto() {
+        String url = "http://mibonsai-cp5006.wordpresstemporal.com/MisRecetas/subirFoto.php";
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                String usuario = user.getNombreUsuario();
+                String foto = imagenToString();
+
+                return super.getParams();
+            }
+        };
+
+    }*/
+
+    /*public String imagenToString(){
+
+        String foto ;
+
+        return foto;
+
+    }*/
+
+    public void cargarFoto(){
+
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/");
+        startActivityForResult(intent.createChooser(intent, "Seleccione la Imagen"),10);
+    }
+
+    @Override
+    protected  void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 10){
+            if(data.getData()!=null) {
+                Uri path = data.getData();
+                imbPerfil.setImageURI(path);
+            }
+        }
+    }
 }

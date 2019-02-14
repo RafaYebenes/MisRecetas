@@ -68,6 +68,9 @@ public class Login extends AppCompatActivity {
                                     newUser.setApellido(jsonRespuesta.getString("apellidos"));
                                     newUser.setEmail(jsonRespuesta.getString("email"));
 
+                                    newUser.setFecha_nacimiento(jsonRespuesta.getString("fecha_nacimiento"));
+                                    newUser.setTelefono(jsonRespuesta.getString("telefono"));
+
                                     Toast.makeText(Login.this, "Conectado con el usuario: " + newUser.getNombreUsuario()+newUser.getApellido(), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), Main.class);
                                     Bundle bundle = new Bundle();

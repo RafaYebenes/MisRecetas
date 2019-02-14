@@ -10,7 +10,7 @@ public class usuario implements Serializable {
     String email;
     String fecha_nacimiento;
     String latitud, longitud;
-    int telefono;
+    String telefono;
 
     public usuario() {
     }
@@ -78,11 +78,11 @@ public class usuario implements Serializable {
         this.longitud = longitud;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
