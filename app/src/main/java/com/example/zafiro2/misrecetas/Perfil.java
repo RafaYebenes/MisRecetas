@@ -222,7 +222,7 @@ public class Perfil extends AppCompatActivity {
 
         user.setTelefono(edtTelefono.getText().toString());
         user.setFecha_nacimiento(edtFechaNacimiento.getText().toString());
-
+        String imagen = imagenToString(bitmap);
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -240,11 +240,9 @@ public class Perfil extends AppCompatActivity {
             }
 
         };
-        obtenerPerfilRequest l = new obtenerPerfilRequest(user.getNombreUsuario(),user.getTelefono(),user.getFecha_nacimiento(), respuesta);
+        obtenerPerfilRequest l = new obtenerPerfilRequest(user.getNombreUsuario(),user.getTelefono(),user.getFecha_nacimiento(),imagen, respuesta);
         RequestQueue cola = Volley.newRequestQueue(Perfil.this);
         cola.add(l);
-
-        cargarWebService();
     }
 
 
@@ -287,39 +285,4 @@ public class Perfil extends AppCompatActivity {
         }
     }
 
-
-    private void cargarWebService(){
-
-
-        String url = "http://mibonsai-cp5006.wordpresstemporal.com/MisRecetas/subirFoto.php";
-
-        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(response.equalsIgnoreCase("registra")){
-                    Toast.makeText(Perfil.this, "Conseguido", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                String usuario = user.getNombreUsuario();
-                String imagen = imagenToString(bitmap);
-
-                Map<String, String> parametros = new HashMap<>();
-                parametros.put("usuario", usuario);
-                parametros.put("imagen", imagen);
-
-                return parametros;
-            }
-
-        };
-        RequestQueue request = Volley.newRequestQueue(Perfil.this);
-        request.add(stringRequest);
-    }
 }

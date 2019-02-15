@@ -12,17 +12,18 @@ import java.util.Map;
 public class obtenerPerfilRequest extends StringRequest {
 
     private static final String ruta = "http://mibonsai-cp5006.wordpresstemporal.com/MisRecetas/obtenerPerfil.php";
+
     private Map<String, String> parametros;
 
 
 
-    public obtenerPerfilRequest(String usuario, String telefono, String fechaNacimiento, Response.Listener<String> listener) {
+    public obtenerPerfilRequest(String usuario, String telefono, String fechaNacimiento,String imagen, Response.Listener<String> listener) {
         super(Request.Method.POST,ruta, listener, null);
         parametros = new HashMap<>();
         parametros.put("usuario",usuario+" ");
         parametros.put("telefono", telefono+" ");
         parametros.put("fechaNacimiento", fechaNacimiento+" ");
-
+        parametros.put("imagen",imagen);
 
 
     }
