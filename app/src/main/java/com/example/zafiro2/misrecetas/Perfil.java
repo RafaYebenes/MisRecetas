@@ -1,14 +1,25 @@
 package com.example.zafiro2.misrecetas;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.system.ErrnoException;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +48,13 @@ import com.example.zafiro2.misrecetas.Objetos.usuario;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Perfil extends AppCompatActivity {
@@ -59,6 +77,13 @@ public class Perfil extends AppCompatActivity {
     Button btnGuardaPerfil;
 
     StringRequest stringRequest;
+    ProgressBar progreso;
+    private static final  String Carpeta_Principal = "imagenesAPP/";
+    private static final String Carpeta_Imagen = "perfil";
+    private static final String DirectorioImagen = Carpeta_Principal+Carpeta_Imagen;
+    File file;
+    Bitmap bitmap;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +92,7 @@ public class Perfil extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("usuarioBundle");
         user = (usuario) bundle.getSerializable("usuario");
+
         cargarObjetos();
     }
 
@@ -120,6 +146,7 @@ public class Perfil extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cargarFoto();
+
             }
         });
 
@@ -216,42 +243,21 @@ public class Perfil extends AppCompatActivity {
         obtenerPerfilRequest l = new obtenerPerfilRequest(user.getNombreUsuario(),user.getTelefono(),user.getFecha_nacimiento(), respuesta);
         RequestQueue cola = Volley.newRequestQueue(Perfil.this);
         cola.add(l);
+
+        cargarWebService();
     }
 
 
-    /*private void subirFoto() {
-        String url = "http://mibonsai-cp5006.wordpresstemporal.com/MisRecetas/subirFoto.php";
-        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+    public String imagenToString(Bitmap bitmap){
 
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                String usuario = user.getNombreUsuario();
-                String foto = imagenToString();
-
-                return super.getParams();
-            }
-        };
-
-    }*/
-
-    /*public String imagenToString(){
-
-        String foto ;
-
+        ByteArrayOutputStream array = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,90,array);
+        byte[] imagenByte = array.toByteArray();
+        String foto = Base64.encodeToString(imagenByte,Base64.DEFAULT);
         return foto;
 
-    }*/
+    }
 
     public void cargarFoto(){
 
@@ -265,10 +271,55 @@ public class Perfil extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == 10){
-            if(data.getData()!=null) {
+            if(data!=null) {
                 Uri path = data.getData();
                 imbPerfil.setImageURI(path);
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), path);
+                    imbPerfil.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                return;
             }
         }
+    }
+
+
+    private void cargarWebService(){
+
+
+        String url = "http://mibonsai-cp5006.wordpresstemporal.com/MisRecetas/subirFoto.php";
+
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.equalsIgnoreCase("registra")){
+                    Toast.makeText(Perfil.this, "Conseguido", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                String usuario = user.getNombreUsuario();
+                String imagen = imagenToString(bitmap);
+
+                Map<String, String> parametros = new HashMap<>();
+                parametros.put("usuario", usuario);
+                parametros.put("imagen", imagen);
+
+                return parametros;
+            }
+
+        };
+        RequestQueue request = Volley.newRequestQueue(Perfil.this);
+        request.add(stringRequest);
     }
 }
