@@ -22,7 +22,7 @@ public class RegistroRequest extends StringRequest {
         parametros = new HashMap<>();
         String fecha_alta = fecha.toString();
         //parametros.put("nombre",nombre+"");
-        parametros.put("usuario",usuario+" ");
+        parametros.put("usuario",usuario);
         parametros.put("password",password+" ");
         parametros.put("email",email+" ");
         parametros.put("nombre", nombre+" ");

@@ -24,8 +24,6 @@ public class obtenerPerfilRequest extends StringRequest {
         parametros.put("telefono", telefono+" ");
         parametros.put("fechaNacimiento", fechaNacimiento+" ");
         parametros.put("imagen",imagen);
-
-
     }
 
 

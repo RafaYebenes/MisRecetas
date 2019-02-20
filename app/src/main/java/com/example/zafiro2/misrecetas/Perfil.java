@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.zafiro2.misrecetas.BBDDInterna.DatabaseAccess;
@@ -94,6 +96,7 @@ public class Perfil extends AppCompatActivity {
         user = (usuario) bundle.getSerializable("usuario");
 
         cargarObjetos();
+        traerFotoServidor();
     }
 
 
@@ -285,4 +288,23 @@ public class Perfil extends AppCompatActivity {
         }
     }
 
+
+    public void traerFotoServidor(){
+        String url = "http://mibonsai-cp5006.wordpresstemporal.com/MisRecetas/imagenes/"+user.getNombreUsuario()+".jpg";
+        url = url.replace(" ","%20");
+        RequestQueue request = Volley.newRequestQueue(this.getApplicationContext());
+        ImageRequest imageRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                imbPerfil.setImageBitmap(response);
+            }
+        },0,0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error){
+                Toast.makeText(Perfil.this, "No se cargo la imagen", Toast.LENGTH_SHORT).show();
+            }
+        });
+        request.add(imageRequest);
+
+    }
 }
