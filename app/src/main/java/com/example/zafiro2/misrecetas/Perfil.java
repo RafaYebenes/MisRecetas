@@ -47,6 +47,8 @@ import com.example.zafiro2.misrecetas.BBDDRemota.obtenerPerfilRequest;
 import com.example.zafiro2.misrecetas.Dialogos.DialogoFecha;
 import com.example.zafiro2.misrecetas.Objetos.usuario;
 import com.example.zafiro2.misrecetas.Objetos.usuario;
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -265,6 +267,7 @@ public class Perfil extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/");
         startActivityForResult(intent.createChooser(intent, "Seleccione la Imagen"),10);
+
     }
 
     @Override
@@ -290,9 +293,11 @@ public class Perfil extends AppCompatActivity {
 
 
     public void traerFotoServidor(){
-        String url = "http://mibonsai-cp5006.wordpresstemporal.com/MisRecetas/imagenes/"+user.getNombreUsuario()+".jpg";
-        url = url.replace(" ","%20");
-        RequestQueue request = Volley.newRequestQueue(this.getApplicationContext());
+        String nombre = user.getNombreUsuario();
+        nombre = nombre.substring(0, nombre.length() - 2);
+        String url = "http://mibonsai-cp5006.wordpresstemporal.com/MisRecetas/imagenes/"+nombre+".jpg";
+        // url = url.replace(" ","%20");
+        /*RequestQueue request = Volley.newRequestQueue(this.getApplicationContext());
         ImageRequest imageRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
@@ -304,7 +309,9 @@ public class Perfil extends AppCompatActivity {
                 Toast.makeText(Perfil.this, "No se cargo la imagen", Toast.LENGTH_SHORT).show();
             }
         });
-        request.add(imageRequest);
+        request.add(imageRequest);*/
+
+        Picasso.get().load(url).into(imbPerfil);
 
     }
 }
