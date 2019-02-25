@@ -112,7 +112,9 @@ public class ListaRecycled extends AppCompatActivity {
             public void onClick(View v) {
                 Receta receta = (Receta) arrayRecetas.get(rv.getChildAdapterPosition(v));
                 Intent intent = new Intent(getApplicationContext(),VisorPDF.class);
-                intent.putExtra("enlace",receta.getArchivo());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("receta",receta);
+                intent.putExtra("bundle",bundle);
                 startActivity(intent);
             }
         });

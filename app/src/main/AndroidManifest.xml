@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -28,8 +30,8 @@
         <activity android:name=".BBDDRemota.Registro" />
         <activity android:name=".RecycledView.ListaRecycled" />
         <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
+            android:name=".CreacionRecetas.CrearPDF"
+            android:label="CrearReceta"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Perfil"></activity>
     </application>

@@ -80,8 +80,7 @@ public class Perfil extends AppCompatActivity {
     ImageButton imbPerfil;
     Button btnGuardaPerfil;
 
-    StringRequest stringRequest;
-    ProgressBar progreso;
+
     private static final  String Carpeta_Principal = "imagenesAPP/";
     private static final String Carpeta_Imagen = "perfil";
     private static final String DirectorioImagen = Carpeta_Principal+Carpeta_Imagen;
@@ -143,10 +142,6 @@ public class Perfil extends AppCompatActivity {
             }
         });
 
-        /* databaseAccess = DatabaseAccess.getInstace(this);
-        int cantidadRecetas = databaseAccess.CantidadRecetas();
-        txvCantidadRecetas.setText(Integer.toString(cantidadRecetas));*/
-
         imbPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,6 +174,11 @@ public class Perfil extends AppCompatActivity {
             Toast.makeText(this, "Tu perfil esta incompleto, relleña los campos que te faltan", Toast.LENGTH_SHORT).show();
             cont =0;
         }
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstace(this);
+        databaseAccess.open();
+        String cantidadRecetas = Integer.toString(databaseAccess.CantidadRecetas());
+        txvCantidadRecetas.setText(cantidadRecetas);
+        databaseAccess.close();
     }
 
 
@@ -223,8 +223,6 @@ public class Perfil extends AppCompatActivity {
     }
 
     public void actualizarPerfil(){
-
-
         user.setTelefono(edtTelefono.getText().toString());
         user.setFecha_nacimiento(edtFechaNacimiento.getText().toString());
         String imagen = imagenToString(bitmap);
@@ -296,22 +294,18 @@ public class Perfil extends AppCompatActivity {
         String nombre = user.getNombreUsuario();
         nombre = nombre.substring(0, nombre.length() - 2);
         String url = "http://mibonsai-cp5006.wordpresstemporal.com/MisRecetas/imagenes/"+nombre+".jpg";
-        // url = url.replace(" ","%20");
-        /*RequestQueue request = Volley.newRequestQueue(this.getApplicationContext());
-        ImageRequest imageRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap response) {
-                imbPerfil.setImageBitmap(response);
-            }
-        },0,0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error){
-                Toast.makeText(Perfil.this, "No se cargo la imagen", Toast.LENGTH_SHORT).show();
-            }
-        });
-        request.add(imageRequest);*/
-
         Picasso.get().load(url).into(imbPerfil);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.finish();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        traerFotoServidor();
     }
 }

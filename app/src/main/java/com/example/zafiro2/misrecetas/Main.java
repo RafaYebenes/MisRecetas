@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.zafiro2.misrecetas.BBDDRemota.Login;
+import com.example.zafiro2.misrecetas.CreacionRecetas.CrearPDF;
 import com.example.zafiro2.misrecetas.ManejoFicheros.ListadoRecetas;
 import com.example.zafiro2.misrecetas.RecycledView.ListaRecycled;
 import com.example.zafiro2.misrecetas.Objetos.*;
@@ -19,17 +20,25 @@ public class Main extends AppCompatActivity {
 
     String usuario;
     usuario user;
+    Button btnCrearReceta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
 
         Bundle bundle = intent.getBundleExtra("bundleUser");
         user = (usuario) bundle.getSerializable("usuario");
 
-
+        btnCrearReceta = findViewById(R.id.btnCrearReceta);
+        btnCrearReceta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getApplicationContext(), CrearPDF.class);
+                startActivity(intent1);
+            }
+        });
 
     }
 

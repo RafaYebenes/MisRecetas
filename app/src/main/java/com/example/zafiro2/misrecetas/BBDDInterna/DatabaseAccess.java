@@ -1,9 +1,11 @@
 package com.example.zafiro2.misrecetas.BBDDInterna;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.example.zafiro2.misrecetas.Objetos.Receta;
 
@@ -77,5 +79,19 @@ public class DatabaseAccess {
         return num;
     }
 
+    public void insertarReceta(Receta receta){
+        ContentValues valores = new ContentValues();
+
+
+        valores.put("nombre_receta",receta.getNombre());
+        valores.put("categoria_receta", receta.getCategoria());
+        valores.put("descripcion_receta",receta.getDescripcion());
+        valores.put("archivo_receta",receta.getArchivo());
+
+        if(valores!=null) {
+            database.insert("recetas", null, valores);
+        }
+        database.close();
+    }
 
 }
