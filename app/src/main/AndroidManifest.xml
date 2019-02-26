@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -25,8 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Main" />
-        <activity android:name=".ManejoFicheros.ListadoRecetas" />
-        <activity android:name=".ManejoFicheros.VisorPDF" />
+        <activity android:name=".Listas.ListadoRecetas" />
+        <activity android:name=".CreacionRecetas.VisorPDF" />
         <activity android:name=".BBDDRemota.Registro" />
         <activity android:name=".RecycledView.ListaRecycled" />
         <activity
@@ -34,6 +35,13 @@
             android:label="CrearReceta"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Perfil"></activity>
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCNDX183UuT1qEAQpXVjprnNUvdwgvJGUY" />
     </application>
+
+
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.zafiro2.misrecetas.ManejoFicheros;
+package com.example.zafiro2.misrecetas.Listas;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,13 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zafiro2.misrecetas.Objetos.Receta;
 import com.example.zafiro2.misrecetas.R;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
 public class Adaptador_lista_recetas extends BaseAdapter {

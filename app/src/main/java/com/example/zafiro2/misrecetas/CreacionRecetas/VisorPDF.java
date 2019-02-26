@@ -1,4 +1,4 @@
-package com.example.zafiro2.misrecetas.ManejoFicheros;
+package com.example.zafiro2.misrecetas.CreacionRecetas;
 
 import android.content.Intent;
 import android.net.Uri;

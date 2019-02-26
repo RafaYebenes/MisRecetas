@@ -9,7 +9,7 @@ public class usuario implements Serializable {
     String apellido;
     String email;
     String fecha_nacimiento;
-    String latitud, longitud;
+    float latitud, longitud;
     String telefono;
 
     public usuario() {
@@ -62,19 +62,19 @@ public class usuario implements Serializable {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public String getLatitud() {
+    public float getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(String latitud) {
+    public void setLatitud(float latitud) {
         this.latitud = latitud;
     }
 
-    public String getLongitud() {
+    public float getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(String longitud) {
+    public void setLongitud(float longitud) {
         this.longitud = longitud;
     }
 

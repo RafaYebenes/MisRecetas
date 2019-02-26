@@ -1,30 +1,22 @@
 package com.example.zafiro2.misrecetas.RecycledView;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.zafiro2.misrecetas.BBDDInterna.DatabaseAccess;
-import com.example.zafiro2.misrecetas.ManejoFicheros.Adaptador_lista_recetas;
-import com.example.zafiro2.misrecetas.ManejoFicheros.VisorPDF;
+import com.example.zafiro2.misrecetas.CreacionRecetas.VisorPDF;
 import com.example.zafiro2.misrecetas.Objetos.Receta;
 import com.example.zafiro2.misrecetas.R;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.zafiro2.misrecetas.BBDDInterna.DatabaseAccess.*;
 
 public class ListaRecycled extends AppCompatActivity {
     Toolbar tbCatRecy;
